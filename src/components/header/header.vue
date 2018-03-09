@@ -5,7 +5,7 @@
         <img  width="64" height="64" :src="seller.avatar" alt="">
       </div>
       <div class="content">
-        <div v-if="seller.supports" class="support-count">
+        <div v-if="seller.supports" class="support-count" @click="showDetail">
           <span class="count">{{seller.supports.length}}个</span>
           <i class="icon-keyboard_arrow_right"></i>
         </div>
@@ -22,7 +22,7 @@
         </div>
       </div>
     </div>
-    <div class="bulletin-wrapper">
+    <div class="bulletin-wrapper" @click="showDetail">
       <span class="bulletin-title"></span>
       <span class="bulletin-text">{{seller.bulletin}}</span>
       <i class="icon-keyboard_arrow_right"></i>
@@ -30,6 +30,7 @@
     <div class="background">
       <img :src="seller.avatar" alt="" width="100%" height="100%">
     </div>
+    <div v-show="detailShow" class="detail"></div>
   </div>
 </template>
 
@@ -38,6 +39,16 @@ export default {
   props: {
     seller: {
       type: Object
+    }
+  },
+  data() {
+    return {
+      'detailShow': false
+    }
+  },
+  methods: {
+    showDetail: function() {
+      this.detailShow = true
     }
   },
   created() {
@@ -51,6 +62,7 @@ export default {
   /*@import "../../common/stylus/icon.styl"*/
   .header
     position relative
+    overflow hidden
     color: #fff
     background rgba(7, 17, 27, 0.5)
     .content-wrapper
@@ -137,7 +149,7 @@ export default {
       .bulletin-title
         display inline-block
         vertical-align top
-        margin-top 7px
+        margin-top 8px
         width 22px
         height 12px
         bg-image('bulletin')
@@ -160,4 +172,13 @@ export default {
       height 100%
       z-index -1
       filter blur(10px)
+    .detail {
+      position fixed
+      top: 0
+      left: 0
+      height 100%
+      width 100%
+      background rgba(7, 17, 27, 0.8)
+      z-index: 100
+    }
 </style>
