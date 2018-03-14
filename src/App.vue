@@ -33,7 +33,6 @@ export default {
       response = response.body
       if (response.errno === ERR_OK) {
         this.seller = response.data
-        console.log(this.seller)
       }
     })
   },
@@ -60,7 +59,7 @@ export default {
         & > a
           display: block
           font-size 14px
-          background-color: yellow
+          /*background-color: yellow*/
           color: rgb(77, 85, 93)
           &.active
             color: blue
