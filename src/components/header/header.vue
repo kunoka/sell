@@ -77,20 +77,20 @@ export default {
       type: Object
     }
   },
-  data() {
+  data () {
     return {
       'detailShow': false
     }
   },
   methods: {
-    showDetail: function() {
+    showDetail: function () {
       this.detailShow = true
     },
     hideClick: function () {
       this.detailShow = false
     }
   },
-  created() {
+  created () {
     this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee']
   },
   components: {

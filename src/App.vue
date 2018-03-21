@@ -23,12 +23,12 @@ import Header from './components/header/header.vue'
 const ERR_OK = 0
 
 export default {
-  data() {
+  data () {
     return {
       seller: {}
     }
   },
-  created() {
+  created () {
     this.$http.get('/api/seller').then((response) => {
       response = response.body
       if (response.errno === ERR_OK) {
