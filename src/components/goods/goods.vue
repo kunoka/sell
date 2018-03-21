@@ -1,6 +1,13 @@
 <template>
 <div class="goods">
   <div class="menu-wrapper">
+    <ul>
+      <li :key="item.id" v-for="item in goods">
+        <span class="text">
+          <span v-show="item.type>0" class="icon" :class="classMap[item.type]">{{item.name}}</span>
+        </span>
+      </li>
+    </ul>
   </div>
   <div class="foods-wrapper"></div>
 </div>
@@ -20,6 +27,7 @@ export default {
     }
   },
   created() {
+    this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee']
     this.$http.get('api/goods').then((response) => {
       if (response.body.errno === ERR_OK) {
         this.goods = response.body.data
