@@ -62,5 +62,5 @@ export default {
           /*background-color: yellow*/
           color: rgb(77, 85, 93)
           &.active
-            color: blue
+            color: red
 </style>
