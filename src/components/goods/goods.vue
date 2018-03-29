@@ -34,12 +34,13 @@
         </li>
       </ul>
     </div>
+    <shopcart></shopcart>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
 import BScroll from 'better-scroll'
-
+import shopcart from '../shopcart/shopcart'
 const ERR_OK = 0
 export default {
   props: {
@@ -84,9 +85,11 @@ export default {
   },
   methods: {
     _initScroll () {
+      // 使自定义的点击事件可以执行
       this.menuScroll = new BScroll(this.$refs.menuWrapper, {
         click: true
       })
+      // probeType:3 监测滚动
       this.foodScroll = new BScroll(this.$refs.foodsWrapper, {
         probeType: 3
       })
@@ -108,8 +111,12 @@ export default {
     clickMenu (index, event) {
       let foodList = this.$refs.foodsWrapper.getElementsByClassName('food-list-hook')
       let el = foodList[index]
+      // 滚动到对应的DOM节点
       this.foodScroll.scrollToElement(el, 300)
     }
+  },
+  components: {
+    shopcart
   }
 }
 </script>
