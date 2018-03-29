@@ -2,7 +2,7 @@
   <div class="goods">
     <div class="menu-wrapper" ref="menuWrapper">
       <ul>
-        <li class="menu-item" :class="{'current' : currentIndex === index}" v-bind:key="item.name" v-for="(item, index) in goods">
+        <li class="menu-item" :class="{'current' : currentIndex === index}" v-bind:key="item.name" v-for="(item, index) in goods" @click="clickMenu(index, $event)">
         <span class="text border-1px">
           <span v-show="item.type > 0" class="icon" :class="classMap[item.type]"></span>{{item.name}}
         </span>
@@ -74,6 +74,7 @@ export default {
         this.goods = response.body.data
         console.log('this.goods')
         console.log(this.goods)
+        // 保证DOM渲染后再操作DOM
         this.$nextTick(() => {
           this._initScroll()
           this._calculateHeight()
@@ -83,7 +84,9 @@ export default {
   },
   methods: {
     _initScroll () {
-      this.menuScroll = new BScroll(this.$refs.menuWrapper, {})
+      this.menuScroll = new BScroll(this.$refs.menuWrapper, {
+        click: true
+      })
       this.foodScroll = new BScroll(this.$refs.foodsWrapper, {
         probeType: 3
       })
@@ -101,6 +104,11 @@ export default {
         this.listHeight.push(height)
       }
       console.log(this.listHeight)
+    },
+    clickMenu (index, event) {
+      let foodList = this.$refs.foodsWrapper.getElementsByClassName('food-list-hook')
+      let el = foodList[index]
+      this.foodScroll.scrollToElement(el, 300)
     }
   }
 }
@@ -132,6 +140,7 @@ export default {
           margin-top: -1px
           background #fff
           font-weight 700
+          color: blue
         .icon
           display inline-block
           vertical-align top
