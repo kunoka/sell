@@ -76,8 +76,10 @@ export default {
         console.log('this.goods')
         console.log(this.goods)
         // 保证DOM渲染后再操作DOM
-        this._initScroll()
-        this._calculateHeight()
+        this.$nextTick(() => {
+          this._initScroll()
+          this._calculateHeight()
+        })
       }
     })
   },
