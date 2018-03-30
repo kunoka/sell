@@ -34,7 +34,7 @@
         </li>
       </ul>
     </div>
-    <shopcart></shopcart>
+    <shopcart :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopcart>
   </div>
 </template>
 
@@ -45,7 +45,7 @@ const ERR_OK = 0
 export default {
   props: {
     seller: {
-      type: Object()
+      type: Object
     }
   },
   data () {
@@ -76,10 +76,8 @@ export default {
         console.log('this.goods')
         console.log(this.goods)
         // 保证DOM渲染后再操作DOM
-        this.$nextTick(() => {
-          this._initScroll()
-          this._calculateHeight()
-        })
+        this._initScroll()
+        this._calculateHeight()
       }
     })
   },
