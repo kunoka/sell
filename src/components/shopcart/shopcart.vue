@@ -5,7 +5,9 @@
       <div class="logo-wrapper">
         <div class="logo" :class="{'highlight': totalCount>0}">
           <i class="icon-shopping_cart"></i>
-          <div class="cart-icon" :class="{'highlight': totalCount>0}">cart</div>
+          <div class="cart-icon" :class="{'highlight': totalCount>0}">
+            <i class="icon-shopping_cart"></i>
+          </div>
         </div>
         <div class="num" v-show="totalCount>0">{{totalCount}}</div>
       </div>
@@ -120,14 +122,12 @@ export default {
               color #80858a
               line-height 44px
             .cart-icon
-              position absolute
-              height 12px
-              width 12px
-              font-size 12px
-              top 50%
-              left 50%
-              margin-left -10px
-              margin-top -8px
+              position relative
+              height 24px
+              width 24px
+              font-size 24px
+              margin 0 auto
+              margin-top 25%
               z-index 999
               &.highlight
                 color #fff
