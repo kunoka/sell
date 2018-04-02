@@ -6,13 +6,13 @@
       </div>
   </transition>
   <div class="cart-count" v-show="food.count>0">{{food.count}}</div>
-  <div class="cart-add icon-add_circle" @click="addCart">
-  </div>
+  <div class="cart-add icon-add_circle" @click="addCart"></div>
 </div>
 </template>
 
 <script type="text/ecmascript-6">
 import Vue from 'vue'
+
 export default {
   props: {
     food: {
@@ -20,6 +20,9 @@ export default {
     }
   },
   methods: {
+    test (event) {
+      console.log(event)
+    },
     addCart (event) {
       if (!event._constructed) {
         return
@@ -31,6 +34,7 @@ export default {
       } else {
         this.food.count++
       }
+      this.$emit('cart-add', event.target)
     },
     decreaseCart (event) {
       if (!event._constructed) {

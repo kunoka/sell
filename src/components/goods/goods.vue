@@ -29,7 +29,7 @@
                   <span class="old" v-show="food.oldPrice">￥{{food.oldPrice}}</span>
                 </div>
                 <div class="cartcontrol-wrapper">
-                  <cartcontrol :food="food"></cartcontrol>
+                  <cartcontrol :food="food" @cart-add="ievent"></cartcontrol>
                 </div>
               </div>
             </li>
@@ -37,7 +37,7 @@
         </li>
       </ul>
     </div>
-    <shopcart :select-foods="selectedFoods" :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopcart>
+    <shopcart  :select-foods="selectedFoods" :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopcart>
   </div>
 </template>
 
@@ -98,6 +98,9 @@ export default {
     })
   },
   methods: {
+    ievent (event) {
+      console.log(event)
+    },
     _initScroll () {
       // 使自定义的点击事件可以执行
       this.menuScroll = new BScroll(this.$refs.menuWrapper, {
