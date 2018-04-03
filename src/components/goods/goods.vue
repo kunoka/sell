@@ -37,7 +37,7 @@
         </li>
       </ul>
     </div>
-    <shopcart  :select-foods="selectedFoods" :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopcart>
+    <shopcart ref="shopcart"  :select-foods="selectedFoods" :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopcart>
   </div>
 </template>
 
@@ -100,6 +100,13 @@ export default {
   methods: {
     ievent (event) {
       console.log(event)
+      this._drop(event)
+    },
+    _drop (target) {
+      // 体验优化，异步执行下落动画
+      this.$nextTick(() => {
+        this.$refs.shopcart.drop(target)
+      })
     },
     _initScroll () {
       // 使自定义的点击事件可以执行

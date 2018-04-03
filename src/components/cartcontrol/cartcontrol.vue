@@ -58,7 +58,7 @@ export default {
         transition all 0.4s linear
       &.fade-enter,&.fade-leave-to
         opacity 0
-        transform translate3D(24px, 0, 0)
+        transform translate3d(24px, 0, 0)
         .inner
           transform rotate(180deg)
       .inner
