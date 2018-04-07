@@ -11,7 +11,7 @@
     </div>
     <div class="foods-wrapper" ref="foodsWrapper">
       <ul>
-        <li :key="item.name" v-for="item in goods" class="food-list-hook">
+        <li @click="selectFood(item, $event)" :key="item.name" v-for="item in goods" class="food-list-hook">
           <h1 class="title">{{item.name}}</h1>
           <ul>
             <li v-bind:key="food.name" v-for="food in item.foods" class="food-item">
@@ -38,6 +38,7 @@
       </ul>
     </div>
     <shopcart ref="shopcart"  :select-foods="selectedFoods" :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopcart>
+    <food :food="selectedFood"></food>
   </div>
 </template>
 
@@ -45,7 +46,7 @@
 import BScroll from 'better-scroll'
 import shopcart from '../shopcart/shopcart'
 import cartcontrol from '../cartcontrol/cartcontrol'
-
+import food from '../food/food'
 const ERR_OK = 0
 export default {
   props: {
@@ -57,7 +58,8 @@ export default {
     return {
       goods: [],
       listHeight: [],
-      scrollY: 0
+      scrollY: 0,
+      selectedFood: {}
     }
   },
   computed: {
@@ -137,11 +139,18 @@ export default {
       let el = foodList[index]
       // 滚动到对应的DOM节点
       this.foodScroll.scrollToElement(el, 300)
+    },
+    selectFood (food, event) {
+      if (!event._constructed) {
+        return
+      }
+      this.selectedFood = food
     }
   },
   components: {
     shopcart,
-    cartcontrol
+    cartcontrol,
+    food
   }
 }
 </script>
