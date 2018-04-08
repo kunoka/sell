@@ -11,10 +11,10 @@
     </div>
     <div class="foods-wrapper" ref="foodsWrapper">
       <ul>
-        <li @click="selectFood(item, $event)" :key="item.name" v-for="item in goods" class="food-list-hook">
+        <li :key="item.name" v-for="item in goods" class="food-list-hook">
           <h1 class="title">{{item.name}}</h1>
           <ul>
-            <li v-bind:key="food.name" v-for="food in item.foods" class="food-item">
+            <li @click="selectFood(food, $event)" v-bind:key="food.name" v-for="food in item.foods" class="food-item">
               <div class="icon">
                 <img width="57" height="57" :src="food.icon" alt="">
               </div>
@@ -145,6 +145,8 @@ export default {
         return
       }
       this.selectedFood = food
+      console.log('----------')
+      console.log(this.selectedFood)
       this.$refs.food._show()
     }
   },
