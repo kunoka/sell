@@ -24,10 +24,7 @@
                 <div class="extra">
                   <span class="count">月售{{food.sellCount}}份</span><span>好评率{{food.rating}}%</span>
                 </div>
-                <div class="price">
-                  <span class="now">￥{{food.price}}</span>
-                  <span class="old" v-show="food.oldPrice">￥{{food.oldPrice}}</span>
-                </div>
+                <price :food="food"></price>
                 <div class="cartcontrol-wrapper">
                   <cartcontrol :food="food" @cart-add="ievent"></cartcontrol>
                 </div>
@@ -47,6 +44,8 @@ import BScroll from 'better-scroll'
 import shopcart from '../shopcart/shopcart'
 import cartcontrol from '../cartcontrol/cartcontrol'
 import food from '../food/food'
+import price from '../subcomponents/price/price.vue'
+
 const ERR_OK = 0
 export default {
   props: {
@@ -145,15 +144,14 @@ export default {
         return
       }
       this.selectedFood = food
-      console.log('----------')
-      console.log(this.selectedFood)
       this.$refs.food._show()
     }
   },
   components: {
     shopcart,
     cartcontrol,
-    food
+    food,
+    price
   }
 }
 </script>
@@ -248,17 +246,6 @@ export default {
           .extra
             .count
               margin-right 12px
-          .price
-            font-weight 700
-            line-height 24px
-            .now
-              margin-right 8px
-              font-size 14px
-              color rgb(240, 20, 20)
-            .old
-              text-decoration line-through
-              font-size 10px
-              color: rgb(147, 153, 159)
           .cartcontrol-wrapper
             position absolute
             right 0

@@ -97,8 +97,6 @@ export default {
     }
   },
   created () {
-    console.log('selectFoods')
-    console.log(this.selectFoods)
   },
   computed: {
     totalPrice () {
