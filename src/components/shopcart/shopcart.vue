@@ -406,7 +406,7 @@ export default {
     height 100%
     width 100%
     z-index 40
-    backdrop-filter blur(10px)
+    filter blur(10px)
     background rgba(7,17,27,0.6)
     &.fade-enter-active,&.fade-leave-active
       transition: all .5s linear
