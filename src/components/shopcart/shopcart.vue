@@ -152,8 +152,7 @@ export default {
   },
   methods: {
     drop (el) {
-      console.log('drop')
-      console.log(el)
+      debugger
       for (let i = 0; i < this.balls.length; i++) {
         let ball = this.balls[i]
         if (!ball.show) {
@@ -165,19 +164,13 @@ export default {
       }
     },
     beforeEnter (el) {
-      console.log('beforeEnter')
-      console.log(el)
       let count = this.balls.length
       while (count--) {
         let ball = this.balls[count]
         if (ball.show) {
           let rect = ball.el.getBoundingClientRect()
-          console.log('rect')
-          console.log(rect)
           let x = rect.left - 32
           let y = -(window.innerHeight - rect.top - 22)
-          console.log('x', x)
-          console.log('y', y)
           el.style.display = ''
           el.style.webkitTransform = `translate3d(0,${y}px,0)`
           el.style.transform = `translate3d(0,${y}px,0)`

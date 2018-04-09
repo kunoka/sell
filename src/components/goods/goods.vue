@@ -34,8 +34,8 @@
         </li>
       </ul>
     </div>
-    <shopcart ref="shopcart"  :select-foods="selectedFoods" :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopcart>
-    <food ref="food" :food="selectedFood"></food>
+    <shopcart ref="shopcart" :select-foods="selectedFoods" :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopcart>
+    <food ref="food" :food="selectedFood" @cart-add="ievent"></food>
   </div>
 </template>
 
@@ -100,7 +100,6 @@ export default {
   },
   methods: {
     ievent (event) {
-      console.log(event)
       this._drop(event)
     },
     _drop (target) {

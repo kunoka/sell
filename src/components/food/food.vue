@@ -11,23 +11,31 @@
         <div class="content">
           <div class="title">{{food.name}}</div>
           <div class="detail">
-            <span class="sell-count">月售{{food.sellCount}}份</span><span class="rating">好评率{{food.rating}}</span>
+            <span class="sell-count">月售{{food.sellCount}}份</span><span class="rating">好评率{{food.rating}}%</span>
           </div>
           <price :food="food"></price>
+          <div class="cartcontrol-wrapper" v-show="food.count">
+            <cartcontrol :food="food" @cart-add="ievent"></cartcontrol>
+          </div>
+          <div @click="addFirst" class="buy" v-show="!food.count || food.count === 0">加入购物车</div>
         </div>
-        <div class="cartcontrol-wrapper">
-          <cartcontrol :food="food"></cartcontrol>
+        <split v-show="food.info"></split>
+        <div class="info" v-show="food.info">
+          <h1 class="title">商品介绍</h1>
+          <p class="text">{{food.info}}</p>
         </div>
-        <div class="buy"></div>
       </div>
     </div>
   </transition>
 </template>
 
 <script type="text/ecmascript-6">
+import Vue from 'vue'
 import BScroll from 'better-scroll'
 import price from '../subcomponents/price/price.vue'
-import cartcontrol from '../cartcontrol/cartcontrol.vue'
+import cartcontrol from '../cartcontrol/cartcontrol'
+import split from '../split/split'
+
 export default {
   props: {
     food: {
@@ -40,6 +48,17 @@ export default {
     }
   },
   methods: {
+    ievent (event) {
+      console.log('--------')
+      console.log(event)
+      this._drop(event)
+    },
+    _drop (target) {
+      // 体验优化，异步执行下落动画
+      this.$nextTick(() => {
+        this.$parent.$refs.shopcart.drop(target)
+      })
+    },
     _show () {
       this.showFlag = true
       this.$nextTick(() => {
@@ -54,11 +73,21 @@ export default {
     },
     hide () {
       this.showFlag = false
+    },
+    addFirst (event) {
+      console.log('click')
+      console.log(event)
+      if (!event._constructed) {
+        return
+      }
+      this.$emit('cart-add', event.target)
+      Vue.set(this.food, 'count', 1)
     }
   },
   components: {
     price,
-    cartcontrol
+    cartcontrol,
+    split
   }
 }
 </script>
@@ -99,6 +128,7 @@ export default {
           padding 10px
           color #fff
     .content
+      position relative
       padding 18px
       .title
         font-size 14px
@@ -116,4 +146,33 @@ export default {
           color rgb(147,153,159)
         .sell-count
           margin-right 12px
+      .cartcontrol-wrapper
+        position absolute
+        right 12px
+        bottom 12px
+      .buy
+        position absolute
+        right 18px
+        bottom 18px
+        padding 0 12px
+        border-radius 12px
+        height 24px
+        line-height 24px
+        color #fff
+        background rgb(0,160,220)
+        z-index 10
+        font-size 10px
+        box-sizing border-box
+    .info
+      padding 18px
+      .title
+        line-height 14px
+        font-size 14px
+        margin-bottom 6px
+        color rgb(7,17,27)
+      .text
+        padding 0 8px
+        font-size 12px
+        color rgb(77,85,93)
+        line-height 24px
 </style>
