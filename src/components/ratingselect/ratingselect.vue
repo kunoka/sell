@@ -6,8 +6,7 @@
       <span class="block negative" :class="{'active':selectType===1}">{{desc.negative}}<span class="count">7</span></span>
     </div>
     <div class="switch">
-      <span class="icon-check_circle"></span>
-      <span class="text">只看有内容的评价</span>
+      <span class="icon-check_circle" :class="{'on': onlyContent}"></span><span class="text">只看有内容的评价</span>
     </div>
   </div>
 </template>
@@ -78,4 +77,21 @@ export default {
           &.active
             background rgb(77,85,93)
 
+    .switch
+      padding 12px 18px
+      line-height 24px
+      border-bottom 1px solid rgba(7,17,27,0.1)
+      color rgb(147,153,159)
+      font-size 0
+      .icon-check_circle
+        display inline-block
+        vertical-align top
+        font-size 24px
+        margin-right 4px
+        &.on
+          color #00c850
+      .text
+        display inline-block
+        font-size 12px
+        vertical-align top
 </style>
