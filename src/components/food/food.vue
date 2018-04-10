@@ -33,7 +33,7 @@
           <ul v-show="food.ratings && food.ratings.length">
             <li class="rating-item" v-bind:key="rating.username" v-for="rating in food.ratings">
               <div class="user">
-                <span class="username">{{rating.username}}</span>
+                <span class="name">{{rating.username}}</span>
                 <img class="avatar" width="12" height="12" :src="rating.avatar" alt="">
               </div>
               <div class="time">{{rating.rateTime}}</div>
@@ -127,6 +127,7 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
+  @import "../../common/stylus/mixin.styl"
   .food
     position fixed
     left 0
@@ -216,4 +217,42 @@ export default {
         font-size 14px
         margin-left 18px
         color rgb(7,17,27)
+    .rating-wrapper
+      padding 0 18px
+      .rating-item
+        position relative
+        padding 16px 0
+        border-1px(rgba(7,17,27,0.1))
+        .user
+          position absolute
+          right 0
+          top 16px
+          line-height 12px
+          font-size 0
+          .name
+            display inline-block
+            margin-right 6px
+            vertical-align top
+            font-size 10px
+            color rgb(147,153,159)
+          .avatar
+            border-radius 50%
+        .time
+          margin-bottom 6px
+          font-size 10px
+          color rgb(147,153,159)
+          line-height 12px
+        .text
+          font-size 12px
+          line-height 16px
+          color rgb(7,17,27)
+          .icon-thumb_up, .icon-thumb_down
+            margin-right 4px
+            line-height 24px
+            font-size 12px
+          .icon-thumb_up
+            color rgb(0,160,220)
+          .icon-thumb_down
+            color rgb(147,153,159)
+            line-height 24px
 </style>
