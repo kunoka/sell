@@ -61,10 +61,11 @@ export default {
   methods: {
     select (type, event) {
       this.selectType = type
-      this.$emit('ratngselect.select', type)
+      this.$emit('ratingselect', type)
     },
     toggleSwitch (event) {
       this.onlyContent = !this.onlyContent
+      this.$emit('togglecontent', this.onlyContent)
     }
   }
 }

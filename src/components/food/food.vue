@@ -27,11 +27,11 @@
         <split></split>
         <div class="rating">
           <h1 class="title">商品评价</h1>
-          <ratingselect :initial-select-type="selectType" :desc="desc" :initial-only-content="onlyContent" :ratings="food.ratings"></ratingselect>
+          <ratingselect @ratingselect="ratingselect" @togglecontent="togglecontent" :initial-select-type="selectType" :desc="desc" :initial-only-content="onlyContent" :ratings="food.ratings"></ratingselect>
         </div>
         <div class="rating-wrapper">
           <ul v-show="food.ratings && food.ratings.length">
-            <li class="rating-item" v-bind:key="rating.username" v-for="rating in food.ratings">
+            <li v-show="needShow(rating.rateType, rating.text)" class="rating-item" v-bind:key="rating.username" v-for="rating in food.ratings">
               <div class="user">
                 <span class="name">{{rating.username}}</span>
                 <img class="avatar" width="12" height="12" :src="rating.avatar" alt="">
@@ -115,6 +115,28 @@ export default {
       }
       this.$emit('cart-add', event.target)
       Vue.set(this.food, 'count', 1)
+    },
+    needShow (type, text) {
+      if (this.onlyContent && !text) {
+        return false
+      }
+      if (this.selectType === ALL) {
+        return true
+      }
+      return type === this.selectType
+    },
+    ratingselect (type) {
+      console.log('type', type)
+      this.selectType = type
+      this.$nextTick(() => {
+        this.scroll.refresh()
+      })
+    },
+    togglecontent (toggle) {
+      this.onlyContent = toggle
+      this.$nextTick(() => {
+        this.scroll.refresh()
+      })
     }
   },
   components: {
@@ -248,7 +270,7 @@ export default {
           color rgb(7,17,27)
           .icon-thumb_up, .icon-thumb_down
             margin-right 4px
-            line-height 24px
+            line-height 16px
             font-size 12px
           .icon-thumb_up
             color rgb(0,160,220)
