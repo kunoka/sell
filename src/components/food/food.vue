@@ -36,14 +36,14 @@
                 <span class="name">{{rating.username}}</span>
                 <img class="avatar" width="12" height="12" :src="rating.avatar" alt="">
               </div>
-              <div class="time">{{rating.rateTime}}</div>
+              <div class="time">{{rating.rateTime | formatDate}}</div>
               <p class="text">
                 <span :class="{'icon-thumb_up': rating.rateType===0, 'icon-thumb_down': rating.rateType===1}"></span>
                 {{rating.text}}
               </p>
             </li>
           </ul>
-          <div class="no-rating" v-show="!food.ratings || !food.ratings.length"></div>
+          <div class="no-rating" v-show="!food.ratings || !food.ratings.length">暂无评论</div>
         </div>
       </div>
     </div>
@@ -57,7 +57,7 @@ import price from '../subcomponents/price/price.vue'
 import cartcontrol from '../cartcontrol/cartcontrol'
 import split from '../split/split'
 import ratingselect from '../ratingselect/ratingselect'
-
+import {formatDate} from '../../common/js/date'
 const ALL = 2
 export default {
   props: {
@@ -144,6 +144,12 @@ export default {
     cartcontrol,
     ratingselect,
     split
+  },
+  filters: {
+    formatDate: function (time) {
+      let date = new Date(time)
+      return formatDate(date, 'yyyy-MM-dd hh:mm')
+    }
   }
 }
 </script>
@@ -277,4 +283,7 @@ export default {
           .icon-thumb_down
             color rgb(147,153,159)
             line-height 24px
+      .no-rating
+        padding 16px 0
+        font-size 12px
 </style>
