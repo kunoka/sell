@@ -69,7 +69,7 @@ export default {
     return {
       showFlag: false,
       selectType: ALL,
-      onlyContent: true,
+      onlyContent: false,
       desc: {
         all: '全部',
         positive: '推荐',
