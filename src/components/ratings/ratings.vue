@@ -28,7 +28,7 @@
       <ratingselect @ratingselect="ratingselect" @togglecontent="togglecontent" :initial-select-type="selectType"
                     :desc="desc" :initial-only-content="onlyContent" :ratings="ratings"></ratingselect>
     </div>
-    <div class="rating-content" v-bind:key="rating" v-for="rating in ratings">
+    <div class="rating-content" v-bind:key="index" v-for="(rating, index) in ratings">
       <div class="avatar" style="width:20px;height: 20px">
         <img :src="rating.avatar" alt="">
       </div>
@@ -37,12 +37,12 @@
         <div class="rateTime">{{rating.rateTime}}</div>
         <div class="star-wrapper">
           <star :size="24" :score="rating.score"></star>
-          <span class="delivery" v-show="rating.deliveryTime">{{deliveryTime}}分钟送达</span>
+          <span class="delivery" v-show="rating.deliveryTime">{{rating.deliveryTime}}分钟送达</span>
         </div>
         <p class="text">{{rating.text}}</p>
         <div class="recommend" v-show="rating.recommend && rating.recommend.length">
           <span class="icon-thumb_up"></span>
-          <span v-bind:key="item" v-for="item in rating.recommend">
+          <span v-bind:key="index" v-for="(item, index) in rating.recommend">
             {{item}}
           </span>
         </div>
