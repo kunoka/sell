@@ -1,5 +1,5 @@
 <template>
-  <div class="rating" ref="rating">
+  <div class="rating" ref="ratings">
     <div class="rating-content">
       <div class="overview">
         <div class="overview-left">
@@ -28,25 +28,29 @@
       <ratingselect @ratingselect="ratingselect" @togglecontent="togglecontent" :initial-select-type="selectType"
                     :desc="desc" :initial-only-content="onlyContent" :ratings="ratings"></ratingselect>
     </div>
-    <div class="rating-content" v-bind:key="index" v-for="(rating, index) in ratings">
-      <div class="avatar" style="width:20px;height: 20px">
-        <img :src="rating.avatar" alt="">
-      </div>
-      <div class="content">
-        <div class="name">{{rating.username}}</div>
-        <div class="rateTime">{{rating.rateTime}}</div>
-        <div class="star-wrapper">
-          <star :size="24" :score="rating.score"></star>
-          <span class="delivery" v-show="rating.deliveryTime">{{rating.deliveryTime}}分钟送达</span>
-        </div>
-        <p class="text">{{rating.text}}</p>
-        <div class="recommend" v-show="rating.recommend && rating.recommend.length">
-          <span class="icon-thumb_up"></span>
-          <span v-bind:key="index" v-for="(item, index) in rating.recommend">
-            {{item}}
-          </span>
-        </div>
-      </div>
+    <div class="rating-wrapper">
+      <ul>
+        <li class="rating-item" v-bind:key="index" v-for="(rating, index) in ratings">
+          <div class="avatar">
+            <img width="28" height="28px" :src="rating.avatar" alt="">
+          </div>
+          <div class="content">
+            <div class="name">{{rating.username}}</div>
+            <div class="star-wrapper">
+              <star :size="24" :score="rating.score"></star>
+              <span class="delivery" v-show="rating.deliveryTime">{{rating.deliveryTime}}分钟送达</span>
+            </div>
+            <p class="text">{{rating.text}}</p>
+            <div class="recommend" v-show="rating.recommend && rating.recommend.length">
+              <i class="icon-thumb_up"></i>
+              <span v-bind:key="index" v-for="(item, index) in rating.recommend">
+                {{item}}
+              </span>
+            </div>
+            <div class="time">{{rating.rateTime|formatDate}}</div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
@@ -56,8 +60,9 @@ import star from 'components/star/star'
 import split from 'components/split/split'
 import ratingselect from 'components/ratingselect/ratingselect'
 import BScroll from 'better-scroll'
+import {formatDate} from '../../common/js/date'
 const ALL = 2
-const ERR_NO = 0
+const ERR_OK = 0
 export default {
   props: {
     seller: {
@@ -79,21 +84,23 @@ export default {
   created () {
     console.log('seller')
     console.log(this.seller)
-    this.$nextTick(() => {
-      if (!this.scroll) {
-        this.scroll = new BScroll(this.$refs.rating, {
-          click: true
-        })
-      } else {
-        this.scroll.refresh()
-      }
-    })
-
     this.$http.get('api/ratings').then((response) => {
-      if (response.body.errno === ERR_NO) {
-        this.ratings = response.body.data
+      response = response.body
+      if (response.errno === ERR_OK) {
+        this.ratings = response.data
+        this.$nextTick(() => {
+          this.scroll = new BScroll(this.$refs.ratings, {
+            click: true
+          })
+        })
       }
     })
+  },
+  filters: {
+    formatDate: function (time) {
+      let date = new Date(time)
+      return formatDate(date, 'yyyy-MM-dd hh:mm')
+    }
   },
   components: {
     star,
@@ -119,6 +126,7 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
+  @import "../../common/stylus/mixin.styl"
   .rating
     position: absolute
     top 174px
@@ -185,4 +193,38 @@ export default {
             margin-left 12px
             font-size 12px
             color rgb(147, 153, 159)
+    .rating-wrapper
+      padding 0 18px
+      .rating-item
+        border-1px(rgba(7,17,27,0.1))
+        padding 18px 0
+        display flex
+        .avatar
+          flex 0 0 28px
+          width 28px
+          margin-right 12px
+          img
+            border-radius 50%
+        .content
+          position relative
+          flex 1
+          .name
+            font-size 10px
+            line-height 12px
+            color rgb(7,17,27)
+            margin-bottom 4px
+          .star-wrapper
+            margin-bottom 6px
+            font-size 0
+            .star
+              display inline-block
+              margin-right 6px
+              vertical-align top
+            .delivery
+              display inline-block
+              vertical-align top
+              font-size 10px
+              font-weight 200
+              color rgb(147,153,159)
+              line-height 12px
 </style>
