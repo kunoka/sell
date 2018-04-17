@@ -15,7 +15,7 @@
           </div>
           <div class="score-wrapper">
             <span class="title">食物评分</span>
-            <star class="star" :size=36 :score="seller.foodScore"></star>
+            <star :size=36 :score="seller.foodScore"></star>
             <span class="score">{{seller.foodScore}}</span>
           </div>
           <div class="deliver-wrapper">
@@ -27,8 +27,7 @@
       <split></split>
       <ratingselect @ratingselect="ratingselect" @togglecontent="togglecontent" :initial-select-type="selectType"
                     :desc="desc" :initial-only-content="onlyContent" :ratings="ratings"></ratingselect>
-    </div>
-    <div class="rating-wrapper">
+      <div class="rating-wrapper">
       <ul>
         <li v-show="needShow(rating.rateType, rating.text)" class="rating-item" v-bind:key="index" v-for="(rating, index) in ratings">
           <div class="avatar">
@@ -51,6 +50,7 @@
           </div>
         </li>
       </ul>
+    </div>
     </div>
   </div>
 </template>
