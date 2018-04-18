@@ -42,6 +42,17 @@
           </li>
         </ul>
       </div>
+      <split></split>
+      <div class="pics">
+        <h1 class="title">商家实景</h1>
+        <div class="pic-wrapper" ref="picWrapper">
+          <ul class="pic-list" ref="picList">
+            <li class="pic-item" v-bind:key="index" v-for="(pic,index) in seller.pics">
+              <img :src="pic" alt="">
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -59,10 +70,25 @@ export default {
     this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee']
   },
   mounted () {
-    console.log('mounted')
     this.scroll = new BScroll(this.$refs.seller, {
       click: true
     })
+    debugger
+    // setup pic-wrapper width
+    if (this.seller.pics) {
+      let picWidth = 120
+      let margin = 6
+      let newWidth = (picWidth + margin) * (this.seller.pics.length) - margin
+      console.log('newWidth', newWidth)
+      this.$refs.picList.style.width = newWidth + 'px'
+      console.log(this.$refs.picList.style.width)
+      this.$nextTick(() => {
+        this.picScroll = new BScroll(this.$refs.picWrapper, {
+          scrollX: true,
+          eventPassthrough: 'vertical'
+        })
+      })
+    }
   },
   components: {
     star,
@@ -170,4 +196,27 @@ export default {
             font-weight 200
           &:last-child
             border-none()
+    .pics
+      padding 18px
+      .title
+        font-size 14px
+        line-height 14px
+        color rgb(7,17,27)
+        margin-bottom 12px
+      .pic-wrapper
+        width 100%
+        overflow hidden
+        white-space nowrap
+        .pic-list
+          font-size 0px
+          .pic-item
+            display inline-block
+            margin-right 6px
+            width 120px
+            height 90px
+            &:last-child
+              margin-right 0
+            img
+              width 120px
+              height 90px
 </style>
