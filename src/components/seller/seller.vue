@@ -168,4 +168,6 @@ export default {
             line-height 16px
             color rgb(27,17,27)
             font-weight 200
+          &:last-child
+            border-none()
 </style>
