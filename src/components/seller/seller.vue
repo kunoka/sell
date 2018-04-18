@@ -1,5 +1,5 @@
 <template>
-  <div class="seller">
+  <div class="seller" ref="seller">
     <div class="seller-content">
       <div class="overview">
         <h1 class="title">{{seller.name}}</h1>
@@ -36,7 +36,7 @@
           <p class="content">{{seller.bulletin}}</p>
         </div>
         <ul v-if="seller.supports" class="supports">
-          <li class="support-item border-1px(rgba(7,17,27,0.1)" :key="key" v-for="(item,key) in seller.supports">
+          <li class="support-item" :key="key" v-for="(item,key) in seller.supports">
             <span class="icon" :class="classMap[item.type]"></span>
             <span class="text">{{item.description}}</span>
           </li>
@@ -48,6 +48,7 @@
 <script type="text/ecmascript-6">
 import star from '../../components/star/star.vue'
 import split from '../../components/split/split'
+import BScroll from 'better-scroll'
 export default {
   props: {
     seller: {
@@ -56,6 +57,12 @@ export default {
   },
   created () {
     this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee']
+  },
+  mounted () {
+    console.log('mounted')
+    this.scroll = new BScroll(this.$refs.seller, {
+      click: true
+    })
   },
   components: {
     star,
@@ -131,4 +138,34 @@ export default {
           line-height 24px
           color rgb(240,20,20)
           font-weight 200
+      .supports
+        .support-item
+          display block
+          padding 16px 12px
+          border-1px rgba(7,17,27,0.1)
+          font-size 0
+          .icon
+            display inline-block
+            vertical-align top
+            width 16px
+            height 16px
+            margin-right 4px
+            background-size 16px 16px
+            background-repeat no-repeat
+            &.decrease
+              bg-image('decrease_4')
+            &.discount
+              bg-image('discount_4')
+            &.guarantee
+              bg-image('guarantee_4')
+            &.invoice
+              bg-image('invoice_4')
+            &.special
+              bg-image('special_4')
+          .text
+            width 300px
+            font-size 12px
+            line-height 16px
+            color rgb(27,17,27)
+            font-weight 200
 </style>
