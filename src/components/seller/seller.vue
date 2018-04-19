@@ -53,6 +53,15 @@
           </ul>
         </div>
       </div>
+      <split></split>
+      <div class="info">
+        <h1 class="title">商家信息</h1>
+        <ul>
+          <li v-bind:key="index" v-for="(info, index) in seller.infos" class="info-item">
+            {{info}}
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -73,7 +82,6 @@ export default {
     this.scroll = new BScroll(this.$refs.seller, {
       click: true
     })
-    debugger
     // setup pic-wrapper width
     if (this.seller.pics) {
       let picWidth = 120
@@ -219,4 +227,20 @@ export default {
             img
               width 120px
               height 90px
+    .info
+      padding 18px 18px 0 18px
+      color rgb(7,17,27)
+      .title
+        font-size 14px
+        line-height 14px
+        padding-bottom 12px
+        border-1px(rgba(7,17,27,0.1))
+      .info-item
+        font-size 12px
+        line-height 16px
+        font-weight 200
+        padding 16px 12px
+        border-1px(rgba(7,17,27,0.1))
+        &:last-child
+          border-none()
 </style>
