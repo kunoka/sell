@@ -28,6 +28,10 @@
             </div>
           </li>
         </ul>
+        <div class="favorite">
+          <span @click="toggleFavorite" class="icon-favorite" :class="{'active': favorite}"></span>
+          <span class="text">{{favoriteText}}</span>
+        </div>
       </div>
       <split></split>
       <div class="bulletin">
@@ -75,8 +79,23 @@ export default {
       type: Object
     }
   },
+  data () {
+    return {
+      favorite: false
+    }
+  },
+  computed: {
+    favoriteText () {
+      return this.favorite ? '已收藏' : '收藏'
+    }
+  },
   created () {
     this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee']
+  },
+  methods: {
+    toggleFavorite () {
+      this.favorite = !this.favorite
+    }
   },
   mounted () {
     this.scroll = new BScroll(this.$refs.seller, {
@@ -114,6 +133,7 @@ export default {
     width 100%
     overflow hidden
     .overview
+      position relative
       padding 18px
       .title
         font-size 14px
@@ -156,7 +176,25 @@ export default {
             color rgb(7,17,27)
             .stress
               font-size 24px
-
+      .favorite
+        position absolute
+        right 5px
+        top 18px
+        width 50px
+        text-align center
+        .icon-favorite
+          display block
+          font-size 24px
+          line-height 24px
+          color: #d4d6d9
+          margin-bottom 4px
+          &.active
+            color rgb(240,20,20)
+        .text
+          display block
+          font-size 10px
+          line-height 10px
+          color rgb(77,85,93)
     .bulletin
       padding 18px 18px 0 18px
       .title
