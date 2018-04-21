@@ -73,6 +73,8 @@
 import star from '../../components/star/star.vue'
 import split from '../../components/split/split'
 import BScroll from 'better-scroll'
+import {saveToLocal, loadFromLocal} from '../../common/js/store'
+
 export default {
   props: {
     seller: {
@@ -81,7 +83,9 @@ export default {
   },
   data () {
     return {
-      favorite: false
+      favorite: (() => {
+        return loadFromLocal(this.seller.id, 'favorite', true)
+      })()
     }
   },
   computed: {
@@ -95,6 +99,7 @@ export default {
   methods: {
     toggleFavorite () {
       this.favorite = !this.favorite
+      saveToLocal(this.seller.id, 'favorite', this.favorite)
     }
   },
   mounted () {
