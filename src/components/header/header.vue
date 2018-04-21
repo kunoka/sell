@@ -87,7 +87,6 @@ export default {
       this.detailShow = true
     },
     hideClick: function () {
-      debugger
       this.detailShow = false
     }
   },
