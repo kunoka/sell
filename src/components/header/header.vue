@@ -223,7 +223,7 @@ export default {
       background rgba(7, 17, 27, 0.8)
       z-index: 100
       &.fade-enter-active, &.fade-leave-active
-        transition: opacity .5s
+        transition: all .5s
       &.fade-enter, &.fade-leave-to
         opacity: 0
       .detail-wrapper
